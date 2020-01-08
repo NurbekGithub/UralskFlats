@@ -1,0 +1,25 @@
+query Flats {
+  __typename
+  flats {
+    endTime
+    id
+    status
+    address
+  }
+}
+
+query Transactions($limit: Int, $offset: Int) {
+  __typename
+  transactions(limit: $limit, offset: $offset) {
+    finish
+    flat {
+      address
+      id
+    }
+    user {
+      id
+      name
+    }
+    id
+  }
+}
