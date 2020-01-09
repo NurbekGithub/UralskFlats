@@ -1,6 +1,7 @@
 import { Menu, MenuItem, Typography } from "@material-ui/core";
 
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
 export default function FlatMenu({
   anchorEl,
@@ -9,6 +10,7 @@ export default function FlatMenu({
   handleDelete,
   handleAddTransaction,
 }: any) {
+  const isAdmin = useContext(UserContext)[0] === 'aia';
   return (
     <Menu
       id="simple-menu"
@@ -18,10 +20,10 @@ export default function FlatMenu({
       onClose={handleClose}
     >
       <MenuItem onClick={handleAddTransaction}>Сдать</MenuItem>
-      <MenuItem onClick={handleEdit}>Редактировать</MenuItem>
-      <MenuItem onClick={handleDelete} component={Typography} color="secondary">
+      {isAdmin && <MenuItem onClick={handleEdit}>Редактировать</MenuItem>}
+      {isAdmin && <MenuItem onClick={handleDelete} component={Typography} color="secondary">
         Удалить
-      </MenuItem>
+      </MenuItem>}
     </Menu>
   )
 }

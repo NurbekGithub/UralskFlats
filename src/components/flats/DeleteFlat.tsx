@@ -1,5 +1,6 @@
 import React from "react"
 import { Button, makeStyles } from "@material-ui/core"
+import { useDeleteFlatMutation, FlatsDocument } from "../../generated/graphql"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -7,11 +8,13 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function DeleteFlat({ selectedFlat, del }: any) {
+export default function DeleteFlat({ selectedFlat, handleDrawerClose }: any) {
+  const [del] = useDeleteFlatMutation({ refetchQueries: [{ query: FlatsDocument }] })
   const classes = useStyles()
   async function handleDelete() {
     try {
-      await del(selectedFlat)
+      await del({ variables: { id: selectedFlat.id } })
+      handleDrawerClose()
     } catch (error) {
       // snackbar.showMessage("Ошибка сохранения данных")
       console.error(error)

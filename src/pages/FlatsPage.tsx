@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useContext } from 'react'
 import { useFlatsQuery } from '../generated/graphql'
 import Loader from '../components/Loader';
-import { List, Button } from '@material-ui/core';
+import { List, Button, Typography } from '@material-ui/core';
 import FlatListItem from '../components/flats/FlatListItem';
 import FlatDrawer from '../components/flats/FlatDrawer';
 import FlatMenu from '../components/flats/FlatMenu';
@@ -47,6 +47,11 @@ export default function FlatsPage() {
     console.error(error)
     return <div>Ошибка</div>
   }
+
+  if (!user) {
+    return <Typography>Авторизуйтесь, пожалуйста</Typography>
+  }
+
   return (
     <>
       <List dense subheader={user === "aia"

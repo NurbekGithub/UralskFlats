@@ -1,21 +1,29 @@
 import React, { useCallback, useContext } from "react"
-import PropTypes from "prop-types"
 import TransactionForm from "./TransactionForm"
 import { UserContext } from "../../context/UserContext"
 import { formatDateForPicker } from "../../utils"
+import { useAddTransactionMutation, TransactionsDocument, useUpdateFlatMutation, FlatsDocument } from "../../generated/graphql"
 
-export default function NewTransaction({ selectedFlat, setFlat }: any) {
+export default function NewTransaction({ selectedFlat }: any) {
+  const [addTransaction] = useAddTransactionMutation({ refetchQueries: [{ query: TransactionsDocument }] })
+  const [updateFlat] = useUpdateFlatMutation({ refetchQueries: [{ query: FlatsDocument }] });
   const user = useContext(UserContext)[0]
   const handleSubmit = useCallback(async data => {
     try {
-      // await add(data, {
-      //   flat: { value: selectedFlat.id, collectionName: "flats" },
-      //   user: { value: user, collectionName: "users" },
-      // })
-      await setFlat({
-        ...selectedFlat,
-        isBooked: true,
-        bookedEndTime: data.finish,
+      await addTransaction({
+        variables: {
+          ...data,
+          flatId: selectedFlat.id,
+          username: user
+        }
+      })
+      await updateFlat({
+        variables: {
+          id: selectedFlat.id,
+          address: selectedFlat.address,
+          status: "booked",
+          endTime: data.finish,
+        }
       })
     } catch (error) {
       // snackbar.showMessage("Ошибка сохранения данных")
@@ -28,6 +36,7 @@ export default function NewTransaction({ selectedFlat, setFlat }: any) {
   }
 
   const initialValues = {
+    price: 0,
     clientName: "",
     clientIIN: "",
     finish: formatDateForPicker(new Date()),
@@ -41,11 +50,4 @@ export default function NewTransaction({ selectedFlat, setFlat }: any) {
       title="Сдать квартиру"
     />
   )
-}
-
-NewTransaction.propTypes = {
-  selectedFlat: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-  }).isRequired,
-  setFlat: PropTypes.func.isRequired,
 }

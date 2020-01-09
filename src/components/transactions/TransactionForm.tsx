@@ -42,6 +42,15 @@ export default function TransactionForm({ onSubmit, initialValues, title }: any)
       />
       <TextField
         fullWidth
+        type='number'
+        name="price"
+        value={data.price}
+        onChange={handleChange}
+        required
+        label="Цена"
+      />
+      <TextField
+        fullWidth
         name="start"
         value={data.start}
         onChange={handleChange}

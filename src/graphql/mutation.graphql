@@ -6,3 +6,55 @@ mutation AddFlat($address: String!) {
     }
   }
 }
+
+mutation UpdateFlat(
+  $id: Int!
+  $address: String
+  $status: String
+  $endTime: timestamptz
+) {
+  __typename
+  update_flats(
+    where: { id: { _eq: $id } }
+    _set: { address: $address, status: $status, endTime: $endTime }
+  ) {
+    returning {
+      id
+      address
+    }
+  }
+}
+
+mutation DeleteFlat($id: Int!) {
+  __typename
+  delete_flats(where: { id: { _eq: $id } }) {
+    returning {
+      id
+    }
+  }
+}
+
+mutation AddTransaction(
+  $flatId: Int!
+  $username: String!
+  $price: numeric!
+  $start: timestamptz!
+  $finish: timestamptz!
+  $clientName: String
+  $clientIIN: String!
+) {
+  __typename
+  insert_transactions(
+    objects: {
+      flatId: $flatId
+      username: $username
+      price: $price
+      start: $start
+      clientName: $clientName
+      clientIIN: $clientIIN
+      finish: $finish
+    }
+  ) {
+    affected_rows
+  }
+}

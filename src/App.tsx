@@ -1,17 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { CssBaseline } from '@material-ui/core';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import { Switch, Route } from 'react-router-dom';
 import FlatsPage from './pages/FlatsPage';
 import TransactionsPage from './pages/TransactionsPage';
-import { UserContext } from './context/UserContext';
+import AdminRoute from './components/AdminRoute';
 
 const App: React.FC = () => {
-  const setUser = useContext(UserContext)[1];
-  if (localStorage.getItem('uf-user')) {
-    setUser(localStorage.getItem('uf-user'))
-  }
   return (
     <>
       <CssBaseline />
@@ -20,7 +16,7 @@ const App: React.FC = () => {
       <main>
         <Switch>
           <Route exact path='/' component={FlatsPage} />
-          <Route exact path='/transactions' component={TransactionsPage} />
+          <AdminRoute exact path='/transactions' component={TransactionsPage} />
         </Switch>
       </main>
     </>

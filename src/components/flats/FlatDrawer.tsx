@@ -23,12 +23,12 @@ export default function FlatDrawer({
 
   if (drawer === "edit") {
     DrawerComponent = (
-      <EditFlatFormContainer selectedFlat={selectedFlat} set={set} />
+      <EditFlatFormContainer selectedFlat={selectedFlat} />
     )
   }
 
   if (drawer === "delete") {
-    DrawerComponent = <DeleteFlat selectedFlat={selectedFlat} del={del} />
+    DrawerComponent = <DeleteFlat selectedFlat={selectedFlat} handleDrawerClose={handleDrawerClose} />
   }
 
   if (drawer === "transaction") {

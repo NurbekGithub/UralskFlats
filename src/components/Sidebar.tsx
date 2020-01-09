@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react"
+import React, { useState, useCallback, useEffect, useContext } from "react"
 import {
   SwipeableDrawer,
   List,
@@ -9,9 +9,11 @@ import {
 import BusinessIcon from "@material-ui/icons/Business"
 import MenuBookIcon from "@material-ui/icons/MenuBook"
 import { Link, useLocation } from "react-router-dom"
+import { UserContext } from "../context/UserContext"
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true)
+  const isAdmin = useContext(UserContext)[0] === 'aia';
   const location = useLocation();
   const toggle = useCallback(() => {
     setIsOpen((isOpen: boolean) => !isOpen)
@@ -28,12 +30,12 @@ export default function Sidebar() {
           </ListItemIcon>
           <ListItemText primary="Квартиры" />
         </ListItem>
-        <ListItem divider button component={Link} to="/transactions">
+        {isAdmin && <ListItem divider button component={Link} to="/transactions">
           <ListItemIcon>
             <MenuBookIcon />
           </ListItemIcon>
           <ListItemText primary="Журнал" />
-        </ListItem>
+        </ListItem>}
       </List>
     </SwipeableDrawer>
   )
