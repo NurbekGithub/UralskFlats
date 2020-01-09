@@ -8,6 +8,7 @@ export default function FlatMenu({
   handleClose,
   handleEdit,
   handleDelete,
+  handleBook,
   handleAddTransaction,
 }: any) {
   const isAdmin = useContext(UserContext)[0] === 'aia';
@@ -20,6 +21,7 @@ export default function FlatMenu({
       onClose={handleClose}
     >
       <MenuItem onClick={handleAddTransaction}>Сдать</MenuItem>
+      <MenuItem onClick={handleBook}>Забронировать</MenuItem>
       {isAdmin && <MenuItem onClick={handleEdit}>Редактировать</MenuItem>}
       {isAdmin && <MenuItem onClick={handleDelete} component={Typography} color="secondary">
         Удалить

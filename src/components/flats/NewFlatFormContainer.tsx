@@ -11,7 +11,7 @@ export default function NewFlatFormContainer() {
       // snackbar.showMessage("Ошибка сохранения данных")
       console.error(error)
     }
-  }, [])
+  }, [add])
 
   const initialValues = {
     address: "",

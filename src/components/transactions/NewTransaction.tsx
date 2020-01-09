@@ -3,6 +3,7 @@ import TransactionForm from "./TransactionForm"
 import { UserContext } from "../../context/UserContext"
 import { formatDateForPicker } from "../../utils"
 import { useAddTransactionMutation, TransactionsDocument, useUpdateFlatMutation, FlatsDocument } from "../../generated/graphql"
+import { FlatStatus } from "../flats/types"
 
 export default function NewTransaction({ selectedFlat }: any) {
   const [addTransaction] = useAddTransactionMutation({ refetchQueries: [{ query: TransactionsDocument }] })
@@ -21,7 +22,7 @@ export default function NewTransaction({ selectedFlat }: any) {
         variables: {
           id: selectedFlat.id,
           address: selectedFlat.address,
-          status: "booked",
+          status: FlatStatus.RENTED,
           endTime: data.finish,
         }
       })
@@ -29,7 +30,7 @@ export default function NewTransaction({ selectedFlat }: any) {
       // snackbar.showMessage("Ошибка сохранения данных")
       console.error(error)
     }
-  }, [])
+  }, [addTransaction, updateFlat, selectedFlat.id, selectedFlat.address, user])
 
   if (!user) {
     return <div>Пожалуйста авторизуйтесь</div>

@@ -1,6 +1,6 @@
 query Flats {
   __typename
-  flats {
+  flats(order_by: { id: desc }) {
     endTime
     id
     status
@@ -8,9 +8,18 @@ query Flats {
   }
 }
 
-query Transactions($limit: Int, $offset: Int) {
+query Transactions(
+  $limit: Int = 20
+  $offset: Int = 0
+  $from: timestamptz
+  $to: timestamptz
+) {
   __typename
-  transactions(limit: $limit, offset: $offset) {
+  transactions(
+    limit: $limit
+    offset: $offset
+    where: { start: { _gte: $from, _lt: $to } }
+  ) {
     finish
     flat {
       address

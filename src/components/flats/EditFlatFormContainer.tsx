@@ -11,7 +11,7 @@ export default function EditFlatFormContainer({ selectedFlat }: any) {
       // snackbar.showMessage("Ошибка сохранения данных")
       console.error(error)
     }
-  }, [])
+  }, [update, selectedFlat.endTime, selectedFlat.id, selectedFlat.status])
 
   return (
     <FlatForm

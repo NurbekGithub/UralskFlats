@@ -13,20 +13,20 @@ export default function Auth() {
   const handleSignin = useCallback(({ name, password }) => {
     findUser({ variables: { name, password } })
     setDrawer(false)
-  }, [])
+  }, [findUser, setDrawer])
 
   const handleSignout = useCallback(() => {
     localStorage.removeItem('uf-user');
     findUser({ variables: { name: "", password: "" } })
     setUser(null);
-  }, [])
+  }, [setUser, findUser])
 
   useEffect(() => {
     if (findUserData?.users.length) {
       setUser(findUserData?.users[0].name);
       localStorage.setItem('uf-user', findUserData?.users[0].name);
     }
-  }, [findUserData])
+  }, [findUserData, setUser])
 
   return <>
     {!user ? (
