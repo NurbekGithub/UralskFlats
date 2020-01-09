@@ -6,8 +6,9 @@ import {
   Typography,
 } from "@material-ui/core"
 import { Link, useLocation } from 'react-router-dom';
+import Auth from "./Auth";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
   },
@@ -32,6 +33,7 @@ export default function Header() {
           <Typography variant="h6" className={classes.title}>
             <Link to="/">{LocationTitle[location.pathname]}</Link>
           </Typography>
+          <Auth />
         </Toolbar>
       </AppBar>
     </div>

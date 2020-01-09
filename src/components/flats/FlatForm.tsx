@@ -40,23 +40,6 @@ export default function FlatForm({ onSubmit, initialValues, title }: FlatFormPro
         required
         label="Адрес"
       />
-      <TextField
-        fullWidth
-        name="type"
-        value={data.type}
-        onChange={handleChange}
-        label="тип"
-        InputLabelProps={{ shrink: true }}
-        select
-        SelectProps={{
-          native: true,
-        }}
-        required
-      >
-        <option value="">Выберите</option>
-        <option value="flat">Квартира</option>
-        <option value="hotelRoom">Номер в гостинице</option>
-      </TextField>
       <div className={classes.buttonWrapper}>
         <Button color="primary" variant="contained" type="submit" size="small">
           Сохранить

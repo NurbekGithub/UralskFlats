@@ -23,3 +23,11 @@ query Transactions($limit: Int, $offset: Int) {
     id
   }
 }
+
+query FindUser($name: String!, $password: String!) {
+  __typename
+  users(where: { name: { _eq: $name }, password: { _eq: $password } }) {
+    name
+    password
+  }
+}

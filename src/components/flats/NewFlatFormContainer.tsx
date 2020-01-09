@@ -13,9 +13,7 @@ export default function NewFlatFormContainer({ add }: any) {
   }, [])
 
   const initialValues = {
-    title: "",
     address: "",
-    type: "",
   }
 
   return (

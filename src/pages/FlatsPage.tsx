@@ -1,12 +1,14 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useContext } from 'react'
 import { useFlatsQuery } from '../generated/graphql'
 import Loader from '../components/Loader';
-import { List } from '@material-ui/core';
+import { List, Button } from '@material-ui/core';
 import FlatListItem from '../components/flats/FlatListItem';
 import FlatDrawer from '../components/flats/FlatDrawer';
 import FlatMenu from '../components/flats/FlatMenu';
+import { UserContext } from '../context/UserContext';
 
 export default function FlatsPage() {
+  const user = useContext(UserContext)[0];
   const [drawer, setDrawer] = useState("")
   const [anchorEl, setAnchorEl] = useState(null)
   const [selectedFlat, setSelectedFlat] = useState(null)
@@ -47,7 +49,10 @@ export default function FlatsPage() {
   }
   return (
     <>
-      <List dense>
+      <List dense subheader={user === "aia"
+        ? <Button onClick={() => setDrawer("new")}>Добавить квартиру</Button>
+        : undefined
+      }>
         {loading && <Loader />}
         {data?.flats.map(flat => (
           <FlatListItem key={flat.id} flat={flat} onMenuClick={handleMenuClick} />
