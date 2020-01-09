@@ -1,6 +1,5 @@
 import React, { useState, useCallback, FormEvent } from "react"
 import { TextField, Typography, makeStyles, Button } from "@material-ui/core"
-import PropTypes from "prop-types"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,9 +25,7 @@ export default function FlatForm({ onSubmit, initialValues, title }: FlatFormPro
   }
 
   const handleChange = useCallback(({ target: { name, value } }) =>
-    setData((oldData: any) => ({ ...oldData, [name]: value }))
-    , []
-  )
+    setData((oldData: any) => ({ ...oldData, [name]: value })), [])
   return (
     <form onSubmit={handleSubmit} className={classes.root}>
       <Typography variant="h6">{title}</Typography>

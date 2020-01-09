@@ -6,9 +6,7 @@ export default function NewFlatFormContainer() {
   const [add] = useAddFlatMutation({ refetchQueries: [{ query: FlatsDocument }] })
   const handleSubmit = useCallback(async data => {
     try {
-      console.log({ data })
-      const res = await add({ variables: { address: data.address } })
-      console.log({ res })
+      await add({ variables: { address: data.address } })
     } catch (error) {
       // snackbar.showMessage("Ошибка сохранения данных")
       console.error(error)
