@@ -7,6 +7,7 @@ import { ApolloProvider } from "@apollo/react-hooks";
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import UserContextProvider from './context/UserContext';
+import SidebarContextProvider from './context/SidebarContext';
 
 const client = new ApolloClient({
   uri: "https://uralsk-flats.herokuapp.com/v1/graphql"
@@ -16,7 +17,9 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <BrowserRouter>
       <UserContextProvider>
-        <App />
+        <SidebarContextProvider>
+          <App />
+        </SidebarContextProvider>
       </UserContextProvider>
     </BrowserRouter>
   </ApolloProvider>, document.getElementById('root'));

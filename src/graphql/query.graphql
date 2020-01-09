@@ -20,6 +20,8 @@ query Transactions(
     offset: $offset
     where: { start: { _gte: $from, _lt: $to } }
   ) {
+    price
+    start
     finish
     flat {
       address

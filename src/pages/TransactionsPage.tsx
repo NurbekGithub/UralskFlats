@@ -66,7 +66,7 @@ export default function TransactionsPage() {
 
   return <List dense subheader={<TransactionsFilter refetch={refetch} />}>
     {loading && <Loader />}
-    {data?.transactions.map(transaction => (
+    {data?.transactions.map((transaction: any) => (
       <TransactionListItem key={transaction.id} transaction={transaction} />
     ))}
   </List>

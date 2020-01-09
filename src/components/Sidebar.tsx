@@ -10,9 +10,10 @@ import BusinessIcon from "@material-ui/icons/Business"
 import MenuBookIcon from "@material-ui/icons/MenuBook"
 import { Link, useLocation } from "react-router-dom"
 import { UserContext } from "../context/UserContext"
+import { SidebarContext } from "../context/SidebarContext"
 
 export default function Sidebar() {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useContext(SidebarContext)
   const isAdmin = useContext(UserContext)[0] === 'aia';
   const location = useLocation();
   const toggle = useCallback(() => {
