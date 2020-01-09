@@ -12,14 +12,13 @@ export default function FlatDrawer({
   handleDrawerClose,
   drawer,
   selectedFlat,
-  add,
   set,
   del,
 }: any) {
   let DrawerComponent = null
 
   if (drawer === "new") {
-    DrawerComponent = <NewFlatFormContainer add={add} />
+    DrawerComponent = <NewFlatFormContainer />
   }
 
   if (drawer === "edit") {

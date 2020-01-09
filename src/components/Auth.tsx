@@ -3,7 +3,7 @@ import { UserContext } from '../context/UserContext';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { IconButton } from '@material-ui/core';
-import { useFindUserLazyQuery, FindUserDocument } from '../generated/graphql';
+import { useFindUserLazyQuery } from '../generated/graphql';
 
 export default function Auth() {
   const [user, setUser] = useContext(UserContext);

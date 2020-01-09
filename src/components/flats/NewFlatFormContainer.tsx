@@ -1,11 +1,14 @@
 import React, { useCallback } from "react"
-import PropTypes from "prop-types"
 import FlatForm from "./FlatForm"
+import { useAddFlatMutation, FlatsDocument } from "../../generated/graphql"
 
-export default function NewFlatFormContainer({ add }: any) {
+export default function NewFlatFormContainer() {
+  const [add] = useAddFlatMutation({ refetchQueries: [{ query: FlatsDocument }] })
   const handleSubmit = useCallback(async data => {
     try {
-      await add(data)
+      console.log({ data })
+      const res = await add({ variables: { address: data.address } })
+      console.log({ res })
     } catch (error) {
       // snackbar.showMessage("Ошибка сохранения данных")
       console.error(error)
@@ -23,8 +26,4 @@ export default function NewFlatFormContainer({ add }: any) {
       title="Добавить новую квартиру"
     />
   )
-}
-
-NewFlatFormContainer.propTypes = {
-  add: PropTypes.func.isRequired,
 }

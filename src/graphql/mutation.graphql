@@ -1,0 +1,8 @@
+mutation AddFlat($address: String!) {
+  __typename
+  insert_flats(objects: { address: $address }) {
+    returning {
+      id
+    }
+  }
+}
