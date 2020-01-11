@@ -15,8 +15,8 @@ import { formatDateTime } from "../../utils"
 import { Link } from "react-router-dom"
 
 interface FlatListItemProps {
-  flat: Flats;
-  onMenuClick(e: MouseEvent<HTMLButtonElement>, flat: Flats): void;
+  flat: Pick<Flats, 'endTime' | 'id' | 'status' | 'address'>;
+  onMenuClick(e: MouseEvent<HTMLButtonElement>, flat: Pick<Flats, 'endTime' | 'id' | 'status' | 'address'>): void;
 }
 
 const FlatStatusText: any = {

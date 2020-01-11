@@ -8,6 +8,46 @@ query Flats {
   }
 }
 
+query Flat(
+  $id: Int!
+  $with_transactions: Boolean! = true
+  $with_bookings: Boolean! = true
+  $month_start: timestamptz!
+  $month_end: timestamptz!
+) {
+  __typename
+  flats_by_pk(id: $id) {
+    endTime
+    id
+    status
+    bookings(
+      where: {
+        _or: {
+          start: { _gte: $month_start, _lt: $month_end }
+          finish: { _gte: $month_start, _lt: $month_end }
+        }
+      }
+    ) @include(if: $with_bookings) {
+      price
+      start
+      finish
+    }
+    transactions(
+      where: {
+        _or: {
+          start: { _gte: $month_start, _lt: $month_end }
+          finish: { _gte: $month_start, _lt: $month_end }
+        }
+      }
+    ) @include(if: $with_transactions) {
+      price
+      start
+      finish
+    }
+    address
+  }
+}
+
 query Transactions(
   $limit: Int = 20
   $offset: Int = 0
