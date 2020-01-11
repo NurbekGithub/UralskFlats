@@ -6,10 +6,11 @@ import {
   Typography,
   IconButton,
 } from "@material-ui/core"
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Auth from "./Auth";
 import { SidebarContext } from "../context/SidebarContext";
 import MenuIcon from "@material-ui/icons/Menu"
+import { HeaderContext } from "../context/HeaderContext";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,14 +24,9 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const LocationTitle: any = {
-  '/': 'Квартиры',
-  '/transactions': "Журнал"
-}
-
 export default function Header() {
   const classes = useStyles()
-  const location = useLocation();
+  const headerTitle = useContext(HeaderContext)[0];
   const setSidebarOpen = useContext(SidebarContext)[1];
 
   return (
@@ -47,7 +43,7 @@ export default function Header() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            <Link to="/">{LocationTitle[location.pathname]}</Link>
+            <Link to="/">{headerTitle}</Link>
           </Typography>
           <Auth />
         </Toolbar>

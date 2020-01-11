@@ -8,7 +8,7 @@ import { FlatStatus } from "../flats/types"
 export default function NewTransaction({ selectedFlat }: any) {
   const [addTransaction] = useAddTransactionMutation({ refetchQueries: [{ query: TransactionsDocument }] })
   const [updateFlat] = useUpdateFlatMutation({ refetchQueries: [{ query: FlatsDocument }] });
-  const user = useContext(UserContext)[0]
+  const { user } = useContext(UserContext)
   const handleSubmit = useCallback(async data => {
     try {
       await addTransaction({

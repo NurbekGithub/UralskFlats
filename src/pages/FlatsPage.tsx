@@ -7,9 +7,10 @@ import FlatDrawer from '../components/flats/FlatDrawer';
 import FlatMenu from '../components/flats/FlatMenu';
 import { UserContext } from '../context/UserContext';
 import { FlatStatus } from '../components/flats/types';
+import { Title } from '../context/HeaderContext';
 
 export default function FlatsPage() {
-  const user = useContext(UserContext)[0];
+  const { user } = useContext(UserContext);
   const [drawer, setDrawer] = useState("")
   const [anchorEl, setAnchorEl] = useState(null)
   const [selectedFlat, setSelectedFlat] = useState<any>(null)
@@ -57,10 +58,12 @@ export default function FlatsPage() {
   if (!user) {
     return <Typography>Авторизуйтесь, пожалуйста</Typography>
   }
+  const isAdmin = user === 'aia';
 
   return (
     <>
-      <List dense subheader={user === "aia"
+      <Title m='Квартиры' />
+      <List dense subheader={isAdmin
         ? <Button onClick={() => setDrawer("new")}>Добавить квартиру</Button>
         : undefined
       }>

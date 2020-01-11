@@ -1,9 +1,9 @@
 import React from "react"
-import { useDeleteFlatMutation, FlatsDocument } from "../../generated/graphql"
+import { useDeleteTransactionMutation, TransactionsDocument } from "../../generated/graphql"
 import DeleteComponent from "../DeleteComponent"
 
-export default function DeleteFlat({ id, handleDrawerClose }: any) {
-  const [del] = useDeleteFlatMutation({ refetchQueries: [{ query: FlatsDocument }] })
+export default function DeleteTransaction({ id, handleDrawerClose }: any) {
+  const [del] = useDeleteTransactionMutation({ refetchQueries: [{ query: TransactionsDocument }] })
   async function handleDelete() {
     try {
       await del({ variables: { id } })

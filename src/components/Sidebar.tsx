@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useContext } from "react"
+import React, { useCallback, useEffect, useContext } from "react"
 import {
   SwipeableDrawer,
   List,
@@ -14,14 +14,14 @@ import { SidebarContext } from "../context/SidebarContext"
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useContext(SidebarContext)
-  const isAdmin = useContext(UserContext)[0] === 'aia';
+  const { isAdmin } = useContext(UserContext);
   const location = useLocation();
   const toggle = useCallback(() => {
     setIsOpen((isOpen: boolean) => !isOpen)
-  }, [])
+  }, [setIsOpen])
   useEffect(() => {
     setIsOpen(false)
-  }, [location])
+  }, [location, setIsOpen])
   return (
     <SwipeableDrawer open={isOpen} onOpen={toggle} onClose={toggle}>
       <List>

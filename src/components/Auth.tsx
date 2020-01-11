@@ -6,7 +6,7 @@ import { IconButton, Drawer, Typography, TextField, Button, makeStyles } from '@
 import { useFindUserLazyQuery } from '../generated/graphql';
 
 export default function Auth() {
-  const [user, setUser] = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [findUser, { data: findUserData }] = useFindUserLazyQuery()
   const [drawer, setDrawer] = useState(false)
 

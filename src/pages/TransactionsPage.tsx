@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { List, Grid, TextField, makeStyles } from '@material-ui/core'
 import TransactionListItem from '../components/transactions/TransactionListItem'
 import { useTransactionsQuery } from '../generated/graphql'
 import Loader from '../components/Loader'
+import TransactionMenu from '../components/transactions/TransactionMenu'
+import TransactionDrawer from '../components/transactions/TransactionDrawer'
+import { Title } from '../context/HeaderContext'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -58,16 +61,50 @@ const TransactionsFilter: React.FC<any> = ({ refetch }) => {
 
 export default function TransactionsPage() {
   const { data, loading, error, refetch } = useTransactionsQuery({ variables: { limit: 20, offset: 0 } })
+  const [drawer, setDrawer] = useState("")
+  const [anchorEl, setAnchorEl] = useState(null)
+  const [selectedTransaction, setSelectedTransaction] = useState<any>(null)
+
+  const handleClose = useCallback(() => {
+    setAnchorEl(null)
+  }, [setAnchorEl])
+
+  const handleMenuClick = useCallback((e, transaction) => {
+    setAnchorEl(e.currentTarget)
+    setSelectedTransaction(transaction)
+  }, [setAnchorEl, setSelectedTransaction])
+
+  const handleDrawerClose = useCallback(() => {
+    setDrawer("")
+    setSelectedTransaction(null)
+  }, [setDrawer, setSelectedTransaction])
+
+  const handleDelete = useCallback(() => {
+    setDrawer("delete")
+    handleClose()
+  }, [setDrawer, handleClose]);
 
   if (error) {
     console.error(error)
     return <div>Ошибка</div>
   }
 
-  return <List dense subheader={<TransactionsFilter refetch={refetch} />}>
-    {loading && <Loader />}
-    {data?.transactions.map((transaction: any) => (
-      <TransactionListItem key={transaction.id} transaction={transaction} />
-    ))}
-  </List>
+  return <>
+    <Title m='Журнал' />
+    <List dense subheader={<TransactionsFilter refetch={refetch} />}>
+      {loading && <Loader />}
+      {data?.transactions.map((transaction: any) => (
+        <TransactionListItem key={transaction.id} transaction={transaction} onMenuClick={handleMenuClick} />
+      ))}
+      <TransactionMenu
+        handleDelete={handleDelete}
+        anchorEl={anchorEl}
+      />
+      <TransactionDrawer
+        handleDrawerClose={handleDrawerClose}
+        drawer={drawer}
+        selectedTransaction={selectedTransaction}
+      />
+    </List>
+  </>
 }

@@ -13,7 +13,6 @@ export default function FlatDrawer({
   drawer,
   selectedFlat,
   set,
-  del,
 }: any) {
   let DrawerComponent = null
 
@@ -28,7 +27,7 @@ export default function FlatDrawer({
   }
 
   if (drawer === "delete") {
-    DrawerComponent = <DeleteFlat selectedFlat={selectedFlat} handleDrawerClose={handleDrawerClose} />
+    DrawerComponent = <DeleteFlat id={selectedFlat.id} handleDrawerClose={handleDrawerClose} />
   }
 
   if (drawer === "transaction") {

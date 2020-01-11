@@ -12,6 +12,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert"
 import { Flats } from "../../generated/graphql"
 import { FlatStatus } from "./types"
 import { formatDateTime } from "../../utils"
+import { Link } from "react-router-dom"
 
 interface FlatListItemProps {
   flat: Flats;
@@ -37,7 +38,7 @@ export default function FlatListItem({ flat, onMenuClick }: FlatListItemProps) {
   const Icon = getFlatStatusIcon(flat.status);
 
   return (
-    <ListItem dense divider>
+    <ListItem dense divider component={Link} to={`/flat/${flat.id}`}>
       <ListItemIcon>{Icon}</ListItemIcon>
       <ListItemText
         primary={flat.address}
