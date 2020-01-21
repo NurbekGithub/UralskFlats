@@ -4,7 +4,11 @@ import { UserContext } from "../../context/UserContext"
 import { formatDateForPicker } from "../../utils"
 import { useAddBookingMutation } from "../../generated/graphql"
 
-export default function NewBooking({ selectedFlat }: any) {
+interface NewBookingProps {
+  selectedFlatId: number
+}
+
+export default function NewBooking({ selectedFlatId }: NewBookingProps) {
   const [addBooking] = useAddBookingMutation()
   const { user } = useContext(UserContext)
   const handleSubmit = useCallback(async data => {
@@ -12,7 +16,7 @@ export default function NewBooking({ selectedFlat }: any) {
       await addBooking({
         variables: {
           ...data,
-          flatId: selectedFlat.id,
+          flatId: selectedFlatId,
           username: user
         }
       })
@@ -20,7 +24,7 @@ export default function NewBooking({ selectedFlat }: any) {
       // snackbar.showMessage("Ошибка сохранения данных")
       console.error(error)
     }
-  }, [addBooking, selectedFlat.id, user])
+  }, [addBooking, selectedFlatId, user])
 
   if (!user) {
     return <div>Пожалуйста авторизуйтесь</div>

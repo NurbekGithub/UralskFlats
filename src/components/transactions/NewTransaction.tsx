@@ -4,7 +4,11 @@ import { UserContext } from "../../context/UserContext"
 import { formatDateForPicker } from "../../utils"
 import { useAddTransactionMutation, TransactionsDocument } from "../../generated/graphql"
 
-export default function NewTransaction({ selectedFlat }: any) {
+interface NewTransactionProps {
+  selectedFlatId: number
+}
+
+export default function NewTransaction({ selectedFlatId }: NewTransactionProps) {
   const [addTransaction] = useAddTransactionMutation({ refetchQueries: [{ query: TransactionsDocument }] })
   const { user } = useContext(UserContext)
   const handleSubmit = useCallback(async data => {
@@ -12,7 +16,7 @@ export default function NewTransaction({ selectedFlat }: any) {
       await addTransaction({
         variables: {
           ...data,
-          flatId: selectedFlat.id,
+          flatId: selectedFlatId,
           username: user
         }
       })
@@ -20,7 +24,7 @@ export default function NewTransaction({ selectedFlat }: any) {
       // snackbar.showMessage("Ошибка сохранения данных")
       console.error(error)
     }
-  }, [addTransaction, selectedFlat.id, user])
+  }, [addTransaction, selectedFlatId, user])
 
   if (!user) {
     return <div>Пожалуйста авторизуйтесь</div>
