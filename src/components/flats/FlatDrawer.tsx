@@ -32,12 +32,12 @@ export default function FlatDrawer({
 
   if (drawer === "transaction") {
     DrawerComponent = (
-      <NewTransaction selectedFlatId={selectedFlat.id} />
+      <NewTransaction selectedFlatId={selectedFlat.id} handleDrawerClose={handleDrawerClose} />
     )
   }
   if (drawer === "booking") {
     DrawerComponent = (
-      <NewBooking selectedFlatId={selectedFlat.id} />
+      <NewBooking selectedFlatId={selectedFlat.id} handleDrawerClose={handleDrawerClose} />
     )
   }
   return (

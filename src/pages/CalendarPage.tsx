@@ -100,6 +100,7 @@ export default function CalendarPage({ match }: any) {
       <Calendar
         localizer={localizer}
         views={["month"]}
+        popup
         messages={{
           next: "След",
           previous: "Пред",

@@ -15,12 +15,12 @@ export default function CalendarDrawer({
 
   if (drawer === "transaction") {
     DrawerComponent = (
-      <NewTransaction selectedFlatId={selectedFlatId} />
+      <NewTransaction selectedFlatId={selectedFlatId} handleDrawerClose={handleDrawerClose} />
     )
   }
   if (drawer === "booking") {
     DrawerComponent = (
-      <NewBooking selectedFlatId={selectedFlatId} />
+      <NewBooking selectedFlatId={selectedFlatId} handleDrawerClose={handleDrawerClose} />
     )
   }
   return (
