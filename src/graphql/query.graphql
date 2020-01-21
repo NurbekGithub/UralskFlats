@@ -1,10 +1,22 @@
-query Flats {
+query Flats($day_start: timestamptz!, $day_end: timestamptz!) {
   __typename
   flats(order_by: { id: desc }) {
-    endTime
     id
-    status
     address
+    bookings(
+      where: {
+        _and: { start: { _lte: $day_end }, finish: { _gte: $day_start } }
+      }
+    ) {
+      id
+    }
+    transactions(
+      where: {
+        _and: { start: { _lte: $day_end }, finish: { _gte: $day_start } }
+      }
+    ) {
+      id
+    }
   }
 }
 
@@ -17,9 +29,7 @@ query Flat(
 ) {
   __typename
   flats_by_pk(id: $id) {
-    endTime
     id
-    status
     bookings(
       where: {
         _or: {

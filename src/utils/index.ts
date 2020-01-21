@@ -13,6 +13,17 @@ export function formatDateTime(timestamp: Date) {
   return date;
 }
 
+export function formatDate(timestamp: Date) {
+  if (!timestamp) return "";
+
+  const date = new Intl.DateTimeFormat("ru-RU", {
+    month: "long",
+    day: "numeric"
+  }).format(new Date(timestamp));
+
+  return date;
+}
+
 function padZero(number: number, length: number) {
   return `${number}`.padStart(length, "0");
 }
@@ -27,13 +38,27 @@ export function formatDateForPicker(date: Date) {
 export function getMonthBoundaries(date: Date) {
   const month_start = moment(date)
     .startOf("month")
-    .format("YYYY-MM-DD hh:mm");
+    .format("YYYY-MM-DD HH:mm");
   const month_end = moment(date)
     .endOf("month")
-    .format("YYYY-MM-DD hh:mm");
+    .format("YYYY-MM-DD HH:mm");
 
   return {
     month_start,
     month_end
+  };
+}
+
+export function getDayBoundaries(date: Date) {
+  const day_start = moment(date)
+    .startOf("day")
+    .format("YYYY-MM-DD HH:mm");
+  const day_end = moment(date)
+    .endOf("day")
+    .format("YYYY-MM-DD HH:mm");
+
+  return {
+    day_start,
+    day_end
   };
 }

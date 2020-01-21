@@ -6,12 +6,12 @@ export default function EditFlatFormContainer({ selectedFlat }: any) {
   const [update] = useUpdateFlatMutation({ refetchQueries: [{ query: FlatsDocument }] })
   const handleSubmit = useCallback(async data => {
     try {
-      await update({ variables: { id: selectedFlat.id, address: data.address, status: selectedFlat.status, endTime: selectedFlat.endTime } })
+      await update({ variables: { id: selectedFlat.id, address: data.address } })
     } catch (error) {
       // snackbar.showMessage("Ошибка сохранения данных")
       console.error(error)
     }
-  }, [update, selectedFlat.endTime, selectedFlat.id, selectedFlat.status])
+  }, [update, selectedFlat.id])
 
   return (
     <FlatForm

@@ -9,20 +9,20 @@ import {
 import BookmarkIcon from "@material-ui/icons/Bookmark"
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
-import { Flats } from "../../generated/graphql"
+import { Flats, Bookings, Transactions } from "../../generated/graphql"
 import { FlatStatus } from "./types"
-import { formatDateTime } from "../../utils"
 import { Link } from "react-router-dom"
 
+type PartialFlat = Pick<Flats, | 'id' | 'address'> & { bookings: Pick<Bookings, 'id'>[] } & { transactions: Pick<Transactions, 'id'>[] };
 interface FlatListItemProps {
-  flat: Pick<Flats, 'endTime' | 'id' | 'status' | 'address'>;
-  onMenuClick(e: MouseEvent<HTMLButtonElement>, flat: Pick<Flats, 'endTime' | 'id' | 'status' | 'address'>): void;
+  flat: PartialFlat;
+  onMenuClick(e: MouseEvent<HTMLButtonElement>, flat: PartialFlat & { status: FlatStatus }): void;
 }
 
 const FlatStatusText: any = {
   [FlatStatus.BOOKED]: "Забронирован",
   [FlatStatus.EMPTY]: "Свободен",
-  [FlatStatus.RENTED]: "Занято до: "
+  [FlatStatus.RENTED]: "Занят"
 }
 
 function getFlatStatusIcon(status: string) {
@@ -35,17 +35,22 @@ function getFlatStatusIcon(status: string) {
 }
 
 export default function FlatListItem({ flat, onMenuClick }: FlatListItemProps) {
-  const Icon = getFlatStatusIcon(flat.status);
+  const status = flat.transactions.length > 0
+    ? FlatStatus.RENTED
+    : flat.bookings.length > 0
+      ? FlatStatus.BOOKED
+      : FlatStatus.EMPTY
+  const Icon = getFlatStatusIcon(status);
 
   return (
     <ListItem dense divider component={Link} to={`/flat/${flat.id}`}>
       <ListItemIcon>{Icon}</ListItemIcon>
       <ListItemText
         primary={flat.address}
-        secondary={`${FlatStatusText[flat.status]} ${formatDateTime(flat.endTime)}`}
+        secondary={`${FlatStatusText[status]}`}
       />
       <ListItemSecondaryAction>
-        <IconButton onClick={e => onMenuClick(e, flat)}>
+        <IconButton onClick={e => onMenuClick(e, { ...flat, status })}>
           <MoreVertIcon />
         </IconButton>
       </ListItemSecondaryAction>

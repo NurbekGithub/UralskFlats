@@ -1,21 +1,20 @@
 import React, { useState, useCallback, useContext } from 'react'
-import { useFlatsQuery, useUpdateFlatMutation, FlatsDocument } from '../generated/graphql'
+import { useFlatsQuery } from '../generated/graphql'
 import Loader from '../components/Loader';
 import { List, Button, Typography } from '@material-ui/core';
 import FlatListItem from '../components/flats/FlatListItem';
 import FlatDrawer from '../components/flats/FlatDrawer';
 import FlatMenu from '../components/flats/FlatMenu';
 import { UserContext } from '../context/UserContext';
-import { FlatStatus } from '../components/flats/types';
 import { Title } from '../context/HeaderContext';
+import { getDayBoundaries } from '../utils';
 
 export default function FlatsPage() {
-  const { user } = useContext(UserContext);
+  const { user, isAdmin } = useContext(UserContext);
   const [drawer, setDrawer] = useState("")
   const [anchorEl, setAnchorEl] = useState(null)
   const [selectedFlat, setSelectedFlat] = useState<any>(null)
-  const { data, loading, error } = useFlatsQuery();
-  const [updateFlat] = useUpdateFlatMutation({ refetchQueries: [{ query: FlatsDocument }] });
+  const { data, loading, error } = useFlatsQuery({ variables: getDayBoundaries(new Date()) });
 
   const handleClose = useCallback(() => {
     setAnchorEl(null)
@@ -31,24 +30,25 @@ export default function FlatsPage() {
     setSelectedFlat(null)
   }, [])
 
-  function handleEdit() {
+  const handleEdit = useCallback(() => {
     setDrawer("edit")
     handleClose()
-  }
+  }, [setDrawer, handleClose])
 
-  function handleDelete() {
+  const handleDelete = useCallback(() => {
     setDrawer("delete")
     handleClose()
-  }
+  }, [setDrawer, handleClose])
 
-  function handleAddTransaction() {
+  const handleAddTransaction = useCallback(() => {
     setDrawer("transaction")
     handleClose()
-  }
+  }, [setDrawer, handleClose])
 
-  function handleBook() {
-    updateFlat({ variables: { id: selectedFlat.id, status: FlatStatus.BOOKED, address: selectedFlat.address } })
-  }
+  const handleAddBooking = useCallback(() => {
+    setDrawer("booking")
+    handleClose()
+  }, [setDrawer, handleClose])
 
   if (error) {
     console.error(error)
@@ -58,7 +58,6 @@ export default function FlatsPage() {
   if (!user) {
     return <Typography>Авторизуйтесь, пожалуйста</Typography>
   }
-  const isAdmin = user === 'aia';
 
   return (
     <>
@@ -75,7 +74,7 @@ export default function FlatsPage() {
       <FlatMenu
         handleEdit={handleEdit}
         handleClose={handleClose}
-        handleBook={handleBook}
+        handleAddBooking={handleAddBooking}
         handleDelete={handleDelete}
         handleAddTransaction={handleAddTransaction}
         anchorEl={anchorEl}

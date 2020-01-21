@@ -6,7 +6,7 @@ import 'moment/locale/ru';
 import { Title } from '../context/HeaderContext';
 import { useFlatQuery, Transactions, Bookings } from '../generated/graphql';
 import Loader from '../components/Loader';
-import { getMonthBoundaries } from '../utils';
+import { getMonthBoundaries, formatDate } from '../utils';
 
 moment.locale('ru')
 
@@ -68,7 +68,7 @@ export default function CalendarPage({ match }: any) {
     <Calendar
       localizer={localizer}
       views={['month']}
-      messages={{ next: 'След', previous: 'Пред', today: 'Сегодня' }}
+      messages={{ next: 'След', previous: 'Пред', today: formatDate(new Date()) }}
       events={getEvents({ flatId }, data?.flats_by_pk?.bookings, data?.flats_by_pk?.transactions)}
       startAccessor="start"
       eventPropGetter={eventStyleGetter}

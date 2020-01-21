@@ -97,6 +97,7 @@ export default function TransactionsPage() {
         <TransactionListItem key={transaction.id} transaction={transaction} onMenuClick={handleMenuClick} />
       ))}
       <TransactionMenu
+        handleClose={handleClose}
         handleDelete={handleDelete}
         anchorEl={anchorEl}
       />

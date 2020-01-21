@@ -1,6 +1,6 @@
 import React, { useState, useCallback, FormEvent } from "react"
 import { TextField, Typography, makeStyles, Button } from "@material-ui/core"
-import { paymentType } from "./types"
+import { paymentType } from "../transactions/types"
 
 const useStyles = makeStyles(theme => ({
   root: {

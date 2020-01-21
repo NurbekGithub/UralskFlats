@@ -7,12 +7,12 @@ import NewFlatFormContainer from "./NewFlatFormContainer"
 import EditFlatFormContainer from "./EditFlatFormContainer"
 import DeleteFlat from "./DeleteFlat"
 import NewTransaction from "../transactions/NewTransaction"
+import NewBooking from "../bookings/NewBooking"
 
 export default function FlatDrawer({
   handleDrawerClose,
   drawer,
   selectedFlat,
-  set,
 }: any) {
   let DrawerComponent = null
 
@@ -32,7 +32,12 @@ export default function FlatDrawer({
 
   if (drawer === "transaction") {
     DrawerComponent = (
-      <NewTransaction selectedFlat={selectedFlat} setFlat={set} />
+      <NewTransaction selectedFlat={selectedFlat} />
+    )
+  }
+  if (drawer === "booking") {
+    DrawerComponent = (
+      <NewBooking selectedFlat={selectedFlat} />
     )
   }
   return (

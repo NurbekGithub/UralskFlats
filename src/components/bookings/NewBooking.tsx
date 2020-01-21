@@ -1,15 +1,15 @@
 import React, { useCallback, useContext } from "react"
-import TransactionForm from "./TransactionForm"
+import BookingForm from "./BookingForm"
 import { UserContext } from "../../context/UserContext"
 import { formatDateForPicker } from "../../utils"
-import { useAddTransactionMutation, TransactionsDocument } from "../../generated/graphql"
+import { useAddBookingMutation } from "../../generated/graphql"
 
-export default function NewTransaction({ selectedFlat }: any) {
-  const [addTransaction] = useAddTransactionMutation({ refetchQueries: [{ query: TransactionsDocument }] })
+export default function NewBooking({ selectedFlat }: any) {
+  const [addBooking] = useAddBookingMutation()
   const { user } = useContext(UserContext)
   const handleSubmit = useCallback(async data => {
     try {
-      await addTransaction({
+      await addBooking({
         variables: {
           ...data,
           flatId: selectedFlat.id,
@@ -20,7 +20,7 @@ export default function NewTransaction({ selectedFlat }: any) {
       // snackbar.showMessage("Ошибка сохранения данных")
       console.error(error)
     }
-  }, [addTransaction, selectedFlat.id, user])
+  }, [addBooking, selectedFlat.id, user])
 
   if (!user) {
     return <div>Пожалуйста авторизуйтесь</div>
@@ -36,10 +36,10 @@ export default function NewTransaction({ selectedFlat }: any) {
   }
 
   return (
-    <TransactionForm
+    <BookingForm
       onSubmit={handleSubmit}
       initialValues={initialValues}
-      title="Сдать квартиру"
+      title="Забронировать квартиру"
     />
   )
 }
